@@ -22,9 +22,21 @@ def log_in(driver, username, password):
     password_field.send_keys(Keys.RETURN)
     print(driver.current_url)
 
-def send_dnr_emails(driver):
+def send_reminder_emails(driver):
     print("Not implemented: sending emails")
 
+def send_status_email(driver):
+    print("Not implemented: sending emails")
 
 def set_dnr(driver):
     print("Not implemented: set dnr")
+
+def sendReminders(config):
+    driver = getDriver()
+    log_in(driver, config['username'], config['password'])
+
+def sendEmail(config):
+    driver = getDriver()
+    log_in(driver, config['username'], config['password'])
+    set_dnr(driver)
+    send_status_email(driver)

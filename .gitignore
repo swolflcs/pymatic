@@ -1,2 +1,3 @@
 *.exe
 chromedriver*/
+config.json
