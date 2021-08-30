@@ -17,6 +17,7 @@ schedule.every().monday.at("00:00").do(start_tasks)
 schedule.every().saturday.at("00:00").do(kill_tasks)
 start_tasks()
 
+print("Pymatic has started, leave this terminal running")
 while True:
     schedule.run_pending()
     time.sleep(15)
