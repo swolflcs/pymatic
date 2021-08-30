@@ -26,7 +26,6 @@ def log_in(driver, username, password):
     username_field.send_keys(username)
     password_field.send_keys(password)
     password_field.send_keys(Keys.RETURN)
-    print(driver.current_url)
 
 def send_reminder_emails(driver):
     buttons = getButtonsByText(driver, "Notify User")
