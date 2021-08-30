@@ -8,7 +8,9 @@ To get started you will need a few things
 
 1. install python 3
 2. run `pip3 install selenium schedule`
-3. configure your config file with the following format
+4. download chromedriver for your version of chrome and place the exe into the 
+   root of your pymatic folder [download directory](https://chromedriver.chromium.org/downloads)
+3. in the root directory create and fill out config.js with the following format
 
     {
         "username": "your username here",
