@@ -36,6 +36,7 @@ def send_reminder_emails(driver):
 def send_status_email(driver):
     buttons = getButtonsByText(driver, "Email Daily Statuses")
     buttons[0].click()
+    driver.implicitly_wait(5)
 
 def set_dnr(driver):
     buttons = getButtonsByText(driver, "Set Status to DNR")
