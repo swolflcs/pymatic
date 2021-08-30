@@ -11,6 +11,7 @@ def getDriver():
     opts.headless = True
     opts.add_argument('--ignore-certificate-errors')
     opts.add_argument('--ignore-ssl-errors')
+    opts.add_argument("--log-level=3")
     return Chrome(options=opts)
 
 def getButtonsByText(driver, text):
@@ -20,7 +21,6 @@ def getButtonsByText(driver, text):
 
 def log_in(driver, username, password):
     driver.get('https://pragmatik.lcsinternalservices.lcs.dev/Account/Login')
-    print(driver.title)
     username_field = driver.find_element_by_name("Username")
     password_field = driver.find_element_by_name("Password")
     username_field.send_keys(username)
@@ -44,13 +44,13 @@ def set_dnr(driver):
         button.click()
     driver.implicitly_wait(5)
 
-def sendReminders(config):
+def send_reminder_task(config):
     driver = getDriver()
     log_in(driver, config['username'], config['password'])
     send_reminder_emails(driver)
     print("[{}] Sending Reminder Emails".format(time.ctime(time.time())))
 
-def sendEmail(config):
+def send_status_task(config):
     driver = getDriver()
     log_in(driver, config['username'], config['password'])
     set_dnr(driver)

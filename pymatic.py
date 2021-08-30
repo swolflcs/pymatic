@@ -7,8 +7,8 @@ with open('config.json', 'r') as file:
     config = json.loads(file.read())
 
 def start_tasks():
-    schedule.every().day.at(config["reminderTime"]).do(send_reminder_emails, config).tag('workday')
-    schedule.every().day.at(config["sendTime"]).do(send_status_email, config).tag('workday')
+    schedule.every().day.at(config["reminderTime"]).do(send_reminder_task, config).tag('workday')
+    schedule.every().day.at(config["sendTime"]).do(send_status_task, config).tag('workday')
 
 def kill_tasks():
     schedule.clear('workday')
