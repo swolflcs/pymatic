@@ -19,9 +19,9 @@ schedule.every().saturday.at("00:00").do(kill_tasks)
 
 if datetime.datetime.today().weekday() < 5:
     start_tasks()
-    print("Pymatic has started, leave this terminal running")
+    log("Pymatic has started, leave this terminal running")
 else:
-    print("Pymatic will start on Monday, leave this terminal running")
+    log("Pymatic will start on Monday, leave this terminal running")
 
 while True:
     schedule.run_pending()

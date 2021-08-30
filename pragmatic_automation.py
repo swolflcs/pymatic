@@ -47,11 +47,16 @@ def send_reminder_task(config):
     driver = getDriver()
     log_in(driver, config['username'], config['password'])
     send_reminder_emails(driver)
-    print("[{}] Sending Reminder Emails".format(time.ctime(time.time())))
+    log("[{}] Sending Reminder Emails".format(time.ctime(time.time())))
 
 def send_status_task(config):
     driver = getDriver()
     log_in(driver, config['username'], config['password'])
     set_dnr(driver)
     send_status_email(driver)
-    print("[{}] Sending Status Email".format(time.ctime(time.time())))
+    log("[{}] Sending Status Email".format(time.ctime(time.time())))
+
+def log(text):
+    with open("output.log", "a") as file:
+        file.write("{}\n".format(text))
+        print(text)
