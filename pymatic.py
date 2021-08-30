@@ -2,6 +2,7 @@ from pragmatic_automation import *
 import json
 import schedule
 import time
+import datetime
 
 with open('config.json', 'r') as file:
     config = json.loads(file.read())
@@ -15,9 +16,13 @@ def kill_tasks():
 
 schedule.every().monday.at("00:00").do(start_tasks)
 schedule.every().saturday.at("00:00").do(kill_tasks)
-start_tasks()
 
-print("Pymatic has started, leave this terminal running")
+if datetime.datetime.today().weekday() < 5:
+    start_tasks()
+    print("Pymatic has started, leave this terminal running")
+else:
+    print("Pymatic will start on Monday, leave this terminal running")
+
 while True:
     schedule.run_pending()
     time.sleep(15)
