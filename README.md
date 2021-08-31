@@ -16,7 +16,8 @@ To get started you will need a few things
         "username": "your username here",
         "password": "your password here",
         "reminderTime": "HH:MM",
-        "sendTime": "HH:MM"
+        "sendTime": "HH:MM",
+        "holidays": ["YYYY-MM-DD", ...]
     }
 
 NOTE: Time is in military format (ex: 6pm == 18:00)

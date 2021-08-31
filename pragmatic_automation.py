@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
+from datetime import date
 
 def getDriver():
     opts = Options()
@@ -44,12 +45,18 @@ def set_dnr(driver):
     driver.implicitly_wait(5)
 
 def send_reminder_task(config):
+    if str(date.today()) in config.holidays:
+        log("Canceled by holiday: Reminder Emails")
+        return
     driver = getDriver()
     log_in(driver, config['username'], config['password'])
     send_reminder_emails(driver)
     log("Sending Reminder Emails")
 
 def send_status_task(config):
+    if str(date.today()) in config.holidays:
+        log("Canceled by holiday: Status Email")
+        return
     driver = getDriver()
     log_in(driver, config['username'], config['password'])
     set_dnr(driver)
