@@ -32,6 +32,7 @@ def send_reminder_emails(driver):
     buttons = getButtonsByText(driver, "Notify User")
     for button in buttons:
         button.click()
+    return len(buttons)
 
 def send_status_email(driver):
     buttons = getButtonsByText(driver, "Email Daily Statuses")
@@ -43,6 +44,7 @@ def set_dnr(driver):
     for button in buttons:
         button.click()
     driver.implicitly_wait(5)
+    return len(buttons)
 
 def send_reminder_task(config):
     if str(date.today()) in config.holidays:
@@ -50,8 +52,8 @@ def send_reminder_task(config):
         return
     driver = getDriver()
     log_in(driver, config['username'], config['password'])
-    send_reminder_emails(driver)
-    log("Sending Reminder Emails")
+    notification_count = send_reminder_emails(driver)
+    log("Sending Reminder Emails: {} sent".format(notification_count))
 
 def send_status_task(config):
     if str(date.today()) in config.holidays:
@@ -59,9 +61,9 @@ def send_status_task(config):
         return
     driver = getDriver()
     log_in(driver, config['username'], config['password'])
-    set_dnr(driver)
+    dnr_count = set_dnr(driver)
     send_status_email(driver)
-    log("Sending Status Email")
+    log("Sending Status Email: {} DNR".format(dnr_count))
 
 def log(text):
     output = "[{}] {}".format(time.ctime(time.time()), text)
