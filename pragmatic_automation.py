@@ -54,6 +54,8 @@ def send_reminder_task(config):
     log_in(driver, config['username'], config['password'])
     notification_count = send_reminder_emails(driver)
     log("Sending Reminder Emails: {} sent".format(notification_count))
+    time.sleep(30)
+    driver.quit()
 
 def send_status_task(config):
     if str(date.today()) in config["holidays"]:
@@ -64,6 +66,8 @@ def send_status_task(config):
     dnr_count = set_dnr(driver)
     send_status_email(driver)
     log("Sending Status Email: {} DNR".format(dnr_count))
+    time.sleep(30)
+    driver.quit()
 
 def log(text):
     output = "[{}] {}".format(time.ctime(time.time()), text)
