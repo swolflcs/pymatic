@@ -17,7 +17,7 @@ def getDriver():
 
 def getButtonsByText(driver, text):
     driver.get('https://pragmatik.lcsinternalservices.lcs.dev/#/teamstatusreview')
-    driver.implicitly_wait(5)
+    driver.implicitly_wait(10)
     return driver.find_elements_by_xpath("//*[contains(text(), '{}')]".format(text))
 
 def log_in(driver, username, password):
@@ -47,7 +47,7 @@ def set_dnr(driver):
     return len(buttons)
 
 def send_reminder_task(config):
-    if str(date.today()) in config.holidays:
+    if str(date.today()) in config["holidays"]:
         log("Canceled by holiday: Reminder Emails")
         return
     driver = getDriver()
@@ -56,7 +56,7 @@ def send_reminder_task(config):
     log("Sending Reminder Emails: {} sent".format(notification_count))
 
 def send_status_task(config):
-    if str(date.today()) in config.holidays:
+    if str(date.today()) in config["holidays"]:
         log("Canceled by holiday: Status Email")
         return
     driver = getDriver()
