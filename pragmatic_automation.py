@@ -17,7 +17,7 @@ def getDriver():
 
 def getButtonsByText(driver, text):
     driver.get('https://pragmatik.lcsinternalservices.lcs.dev/#/teamstatusreview')
-    driver.implicitly_wait(10)
+    driver.implicitly_wait(5)
     return driver.find_elements_by_xpath("//*[contains(text(), '{}')]".format(text))
 
 def log_in(driver, username, password):
@@ -32,6 +32,7 @@ def send_reminder_emails(driver):
     buttons = getButtonsByText(driver, "Notify User")
     for button in buttons:
         button.click()
+        driver.implicitly_wait(.5)
     return len(buttons)
 
 def send_status_email(driver):
@@ -43,7 +44,7 @@ def set_dnr(driver):
     buttons = getButtonsByText(driver, "Set Status to DNR")
     for button in buttons:
         button.click()
-    driver.implicitly_wait(5)
+        driver.implicitly_wait(.5)
     return len(buttons)
 
 def send_reminder_task(config):

@@ -4,3 +4,4 @@ config.json
 test.py
 __pycache__/
 *.log
+.vscode/
