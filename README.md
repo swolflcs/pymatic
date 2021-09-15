@@ -21,3 +21,9 @@ To get started you will need a few things
     }
 
 NOTE: Time is in military format (ex: 6pm == 18:00)
+
+## Running Pymatic
+
+1. Open your favorite terminal
+2. Type `python3 pymatic.py` to start the daemon
+3. CTRL+C to interrupt the script
