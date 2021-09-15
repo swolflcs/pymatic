@@ -12,13 +12,15 @@ To get started you will need a few things
    root of your pymatic folder [download directory](https://chromedriver.chromium.org/downloads)
 3. in the root directory create and fill out config.js with the following format
 
-    {
-        "username": "your username here",
-        "password": "your password here",
-        "reminderTime": "HH:MM",
-        "sendTime": "HH:MM",
-        "holidays": ["YYYY-MM-DD", ...]
-    }
+```
+{
+    "username": "your username here",
+    "password": "your password here",
+    "reminderTime": "HH:MM",
+    "sendTime": "HH:MM",
+    "holidays": ["YYYY-MM-DD", ...]
+}
+```
 
 NOTE: Time is in military format (ex: 6pm == 18:00)
 
