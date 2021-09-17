@@ -1,7 +1,7 @@
+__pycache__/
+.vscode/
 *.exe
+*.log
 chromedriver*/
 config.json
 test.py
-__pycache__/
-*.log
-.vscode/

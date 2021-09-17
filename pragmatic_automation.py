@@ -40,36 +40,46 @@ def send_status_email(driver):
     buttons[0].click()
     driver.implicitly_wait(5)
 
-def set_dnr(driver):
-    buttons = getButtonsByText(driver, "Set Status to DNR")
-    for button in buttons:
-        button.click()
-        driver.implicitly_wait(.5)
-    return len(buttons)
+def set_dnr(driver, count=0):
+    try:
+        buttons = getButtonsByText(driver, "Set Status to DNR")
+        for button in buttons:
+            button.click()
+            driver.implicitly_wait(.5)
+        return count if count != 0 else len(buttons)
+    except Exception as err:
+        log("ERROR: {} ocurred. {}".format(type(err).__name__, err.__str__()))
+        set_dnr(driver, count if count != 0 else len(buttons))
 
 def send_reminder_task(config):
-    if str(date.today()) in config["holidays"]:
-        log("Canceled by holiday: Reminder Emails")
-        return
-    driver = getDriver()
-    log_in(driver, config['username'], config['password'])
-    notification_count = send_reminder_emails(driver)
-    log("Sending Reminder Emails: {} sent".format(notification_count))
-    time.sleep(30)
-    driver.quit()
+    try:
+        if str(date.today()) in config["holidays"]:
+            log("Canceled by holiday: Reminder Emails")
+            return
+        driver = getDriver()
+        log_in(driver, config['username'], config['password'])
+        notification_count = send_reminder_emails(driver)
+        log("Sending Reminder Emails: {} sent".format(notification_count))
+        time.sleep(30)
+        driver.quit()
+    except Exception as err:
+        log("ERROR: {} ocurred. {}".format(type(err).__name__, err.__str__()))
 
 def send_status_task(config):
-    if str(date.today()) in config["holidays"]:
-        log("Canceled by holiday: Status Email")
-        return
-    driver = getDriver()
-    log_in(driver, config['username'], config['password'])
-    dnr_count = set_dnr(driver)
-    send_status_email(driver)
-    log("Sending Status Email: {} DNR".format(dnr_count))
-    time.sleep(30)
-    driver.quit()
-
+    try:
+        if str(date.today()) in config["holidays"]:
+            log("Canceled by holiday: Status Email")
+            return
+        driver = getDriver()
+        log_in(driver, config['username'], config['password'])
+        dnr_count = set_dnr(driver)
+        send_status_email(driver)
+        log("Sending Status Email: {} DNR".format(dnr_count))
+        time.sleep(30)
+        driver.quit()
+    except Exception as err:
+        log("ERROR: {} ocurred. {}".format(type(err).__name__, err.__str__()))
+    
 def log(text):
     output = "[{}] {}".format(time.ctime(time.time()), text)
     with open("output.log", "a") as file:
