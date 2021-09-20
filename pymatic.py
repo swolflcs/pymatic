@@ -8,7 +8,11 @@ with open('config.json', 'r') as file:
     config = json.loads(file.read())
 
 def start_tasks():
-    schedule.every().day.at(config["reminderTime"]).do(send_reminder_task, config).tag('task')
+    if 'reminderTimes' in config.keys():
+        for time in config['reminderTimes']:
+            schedule.every().day.at(time).do(send_reminder_task, config).tag('task')
+    else:
+        schedule.every().day.at(config["reminderTime"]).do(send_reminder_task, config).tag('task')
     schedule.every().day.at(config["sendTime"]).do(send_status_task, config).tag('task')
     log("Starting Pymatic Tasks, leave this terminal running")
 
