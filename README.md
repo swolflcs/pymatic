@@ -16,7 +16,7 @@ To get started you will need a few things
 {
     "username": "your username here",
     "password": "your password here",
-    "reminderTime": "HH:MM",
+    "reminderTime": "HH:MM" OR "reminderTimes": ["HH:MM", ...]
     "sendTime": "HH:MM",
     "holidays": ["YYYY-MM-DD", ...]
 }
