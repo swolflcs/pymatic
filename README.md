@@ -24,6 +24,12 @@ To get started you will need a few things
 
 NOTE: Time is in military format (ex: 6pm == 18:00)
 
+## Features
+
+- Sends reminders and the status email at the times specified in the config
+- Turns off during the weekend and on holidays specified in the config
+- Keeps a log of activity in output.log
+
 ## Running Pymatic
 
 1. Open your favorite terminal
