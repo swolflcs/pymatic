@@ -2,6 +2,6 @@ __pycache__/
 .vscode/
 *.exe
 *.log
-chromedriver*/
+chromedriver*
 config.json
 test.py

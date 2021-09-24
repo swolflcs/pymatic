@@ -48,7 +48,7 @@ def set_dnr(driver, count=0):
             driver.implicitly_wait(.5)
         return count if count != 0 else len(buttons)
     except Exception as err:
-        log("ERROR: {} ocurred. {}".format(type(err).__name__, err.__str__()))
+        log("ERROR: {} ocurred. {}".format(type(err).__name__, err.__str__().strip()))
         set_dnr(driver, count if count != 0 else len(buttons))
 
 def send_reminder_task(config):
@@ -63,7 +63,7 @@ def send_reminder_task(config):
         time.sleep(30)
         driver.quit()
     except Exception as err:
-        log("ERROR: {} ocurred. {}".format(type(err).__name__, err.__str__()))
+        log("ERROR: {} ocurred. {}".format(type(err).__name__, err.__str__().strip()))
 
 def send_status_task(config):
     try:
@@ -78,7 +78,7 @@ def send_status_task(config):
         time.sleep(30)
         driver.quit()
     except Exception as err:
-        log("ERROR: {} ocurred. {}".format(type(err).__name__, err.__str__()))
+        log("ERROR: {} ocurred. {}".format(type(err).__name__, err.__str__().strip()))
     
 def log(text):
     output = "[{}] {}".format(time.ctime(time.time()), text)
