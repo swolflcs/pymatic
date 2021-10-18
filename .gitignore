@@ -5,3 +5,8 @@ __pycache__/
 chromedriver*
 config.json
 test.py
+dist/
+build/
+pymatic.spec
+pymatic/
+*.zip
