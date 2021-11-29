@@ -6,6 +6,14 @@ import datetime
 from os.path import exists
 import sys
 
+last_heartbeat = 0
+POLL_FQ = 15
+
+def task_heartbeat():
+    global last_heartbeat
+    last_heartbeat = 0
+    log_heartbeat("Task Heartbeat")
+
 try:
     with open('config.json', 'r') as file:
         config = json.loads(file.read())
@@ -29,6 +37,7 @@ def start_tasks():
         else:
             schedule.every().day.at(config["reminderTime"]).do(send_reminder_task, config).tag('task')
         schedule.every().day.at(config["sendTime"]).do(send_status_task, config).tag('task')
+        schedule.every(15).seconds.do(task_heartbeat).tag('task')
         log("Starting Pymatic Tasks, leave this terminal running")
     except Exception as err:
         print("ERROR: {} ocurred. {}".format(type(err).__name__, err.__str__().strip()))
@@ -39,8 +48,13 @@ def clear_tasks():
     schedule.clear('task')
     log("Clearing Pymatic Tasks")
 
-schedule.every().monday.at("00:00").do(start_tasks)
-schedule.every().saturday.at("00:00").do(clear_tasks)
+def start_system_tasks():
+    schedule.clear('system')
+    schedule.every().monday.at("00:00").do(start_tasks).tag('system')
+    schedule.every().saturday.at("00:00").do(clear_tasks).tag('system')
+    log("Starting system tasks")
+
+start_system_tasks()
 
 if datetime.datetime.today().weekday() < 5:
     start_tasks()
@@ -48,5 +62,11 @@ else:
     log("Pymatic will start on Monday, leave this terminal running")
 
 while True:
+    last_heartbeat += POLL_FQ
     schedule.run_pending()
-    time.sleep(15)
+    if last_heartbeat > POLL_FQ * 2:
+        log("Heartbeat timed out, restarting pymatic")
+        clear_tasks()
+        start_tasks()
+        start_system_tasks()
+    time.sleep(POLL_FQ)

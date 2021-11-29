@@ -85,3 +85,8 @@ def log(text):
     with open("output.log", "a") as file:
         file.write("{}\n".format(output))
         print(output)
+
+def log_heartbeat(text):
+    output = "[{}] {}".format(time.ctime(time.time()), text)
+    with open("heartbeat.log", "a") as file:
+        file.write("{}\n".format(output))
