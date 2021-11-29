@@ -37,7 +37,7 @@ def start_tasks():
         else:
             schedule.every().day.at(config["reminderTime"]).do(send_reminder_task, config).tag('task')
         schedule.every().day.at(config["sendTime"]).do(send_status_task, config).tag('task')
-        schedule.every(15).seconds.do(task_heartbeat).tag('task')
+        schedule.every(POLL_FQ).seconds.do(task_heartbeat).tag('task')
         log("Starting Pymatic Tasks, leave this terminal running")
     except Exception as err:
         print("ERROR: {} ocurred. {}".format(type(err).__name__, err.__str__().strip()))
