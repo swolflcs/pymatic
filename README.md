@@ -29,12 +29,20 @@ NOTE: Time is in military format (ex: 6pm == 18:00)
 - Sends reminders and the status email at the times specified in the config
 - Turns off during the weekend and on holidays specified in the config
 - Keeps a log of activity in output.log
+- Records heartbeat data in heartbeat.log
 
 ## Running Pymatic
 
 1. Open your favorite terminal
 2. Type `python3 pymatic.py` to start the daemon
 3. CTRL+C to interrupt the script
+
+## Troubleshooting
+
+- If you are get an error in your which prevents a task from running verify
+  that your version of chrome matches your version of chromedriver
+- If nothing is happening verify that the password and username in your config
+  are correct
 
 ## Building Pymatic
 
