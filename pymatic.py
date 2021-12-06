@@ -30,19 +30,22 @@ if not exists('chromedriver.exe'):
     sys.exit()
 
 def start_tasks():
-    try:
-        if 'reminderTimes' in config.keys():
-            for time in config['reminderTimes']:
-                schedule.every().day.at(time).do(send_reminder_task, config).tag('task')
-        else:
-            schedule.every().day.at(config["reminderTime"]).do(send_reminder_task, config).tag('task')
-        schedule.every().day.at(config["sendTime"]).do(send_status_task, config).tag('task')
-        schedule.every(POLL_FQ).seconds.do(task_heartbeat).tag('task')
-        log("Starting Pymatic Tasks, leave this terminal running")
-    except Exception as err:
-        print("ERROR: {} ocurred. {}".format(type(err).__name__, err.__str__().strip()))
-        input("Press enter to close")
-        sys.exit()
+    schedule.clear('task')
+    if datetime.datetime.today().weekday() < 5:
+        try:
+            if 'reminderTimes' in config.keys():
+                for time in config['reminderTimes']:
+                    schedule.every().day.at(time).do(send_reminder_task, config).tag('task')
+            else:
+                schedule.every().day.at(config["reminderTime"]).do(send_reminder_task, config).tag('task')
+            schedule.every().day.at(config["sendTime"]).do(send_status_task, config).tag('task')
+            log("Starting Pymatic Tasks, leave this terminal running")
+        except Exception as err:
+            print("ERROR: {} ocurred. {}".format(type(err).__name__, err.__str__().strip()))
+            input("Press enter to close")
+            sys.exit()
+    else:
+        log("Pymatic will start on Monday, leave this terminal running")
 
 def clear_tasks():
     schedule.clear('task')
@@ -52,21 +55,17 @@ def start_system_tasks():
     schedule.clear('system')
     schedule.every().monday.at("00:00").do(start_tasks).tag('system')
     schedule.every().saturday.at("00:00").do(clear_tasks).tag('system')
+    schedule.every(POLL_FQ).seconds.do(task_heartbeat).tag('system')
     log("Starting system tasks")
 
 start_system_tasks()
-
-if datetime.datetime.today().weekday() < 5:
-    start_tasks()
-else:
-    log("Pymatic will start on Monday, leave this terminal running")
+start_tasks()
 
 while True:
     last_heartbeat += POLL_FQ
     schedule.run_pending()
-    if last_heartbeat > POLL_FQ * 2:
+    if last_heartbeat > POLL_FQ * 4:
         log("Heartbeat timed out, restarting pymatic")
-        clear_tasks()
-        start_tasks()
         start_system_tasks()
+        start_tasks()
     time.sleep(POLL_FQ)
